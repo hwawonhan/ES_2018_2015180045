@@ -36,6 +36,18 @@ bool Renderer::IsInitialized()
 
 void Renderer::CreateVertexBufferObjects()
 {
+
+	float linevertex[] = {
+		-0.5f, 0.0f, 0.0f, 0.0f,
+		0.5f, 0.0f, 0.0f, 1.0f/3.0f,
+		0.0f, -0.5f, 0.0f, 2.0f/3.0f,
+		-0.5f, 0.0f, 0.0f, 1.0f,
+	};
+
+	glGenBuffers(1, &m_VBOLine);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLine);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(linevertex), linevertex, GL_STATIC_DRAW);
+
 	float rect[]
 		=
 	{
@@ -198,16 +210,15 @@ void Renderer::Test()
 
 	int attribPosition = glGetAttribLocation(m_SolidRectShader, "a_Position");
 	glEnableVertexAttribArray(attribPosition);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLine);
 	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
 	glDisableVertexAttribArray(attribPosition);
 }
 
-float gTime = 1;
-//float gDir = 1;
+
+
 void Renderer::Lecture2()
 {
 	glUseProgram(m_SolidRectShader);
@@ -244,14 +255,41 @@ void Renderer::Lecture2()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture3_Color);
 	glVertexAttribPointer(colorLocation, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	
-	glUniform1f(scaleUiform, gTime);
-	//gTime += gDir*0.001;
-	//if (gTime > 1.0f)
-	//	gDir *= -1;
-	//if(gTime <0.0f)
-	//	gDir *= -1;
+	glUniform1f(scaleUiform, 1.0f);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+}
+
+void Renderer::Lecture4()
+{
+	glUseProgram(m_SolidRectShader);
+
+	GLint posLocation = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	GLint scaleLocation = glGetAttribLocation(m_SolidRectShader, "a_Scale");
+	GLint colorLocation = glGetAttribLocation(m_SolidRectShader, "a_Color");
+	GLint scaleUiform = glGetUniformLocation(m_SolidRectShader, "u_Scale");
+	GLint TimeUiform = glGetUniformLocation(m_SolidRectShader, "u_Time");
+
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLine);
+	glVertexAttribPointer(posLocation, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	//size 추가하기
+	glEnableVertexAttribArray(scaleLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture3_Scale);
+	glVertexAttribPointer(scaleLocation, 1, GL_FLOAT, GL_FALSE, 0, 0);
+
+	//Color 추가하기
+	glEnableVertexAttribArray(colorLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture3_Color);
+	glVertexAttribPointer(colorLocation, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glUniform1f(scaleUiform, 1.0f);
+	glUniform1f(TimeUiform, time);
+	time += 0.001f;
+	glDrawArrays(GL_LINE_STRIP, 0, 4);
+	glDisableVertexAttribArray(posLocation);
 }
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)

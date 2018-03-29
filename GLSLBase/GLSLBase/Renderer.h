@@ -17,7 +17,7 @@ public:
 	void Test();
 
 	void Lecture2();
-
+	void Lecture4();
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -32,6 +32,7 @@ private:
 	unsigned int m_WindowSizeY = 0;
 
 	GLuint m_VBORect = 0;
+	GLuint m_VBOLine = 0;
 	GLuint m_SolidRectShader = 0;
 
 	GLuint m_VBOLecture2 = 0;
@@ -39,5 +40,6 @@ private:
 	GLuint m_VBOLecture3_Scale = 0;
 	GLuint m_VBOLecture3_Color = 0;
 
+	float time = 0;
 };
 

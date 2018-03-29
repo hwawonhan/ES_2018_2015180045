@@ -10,6 +10,6 @@ uniform float u_Scale;
 
 void main()
 {
-	gl_Position = a_Position * vec4(a_Scale, a_Scale, a_Scale, 1);
-	v_Color = a_Color;
+	gl_Position = vec4(a_Position.xyz,1);
+	v_Color = vec4(a_Position.w, 0, 0, 1);
 }
