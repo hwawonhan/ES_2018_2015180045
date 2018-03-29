@@ -35,10 +35,13 @@ private:
 	GLuint m_VBOLine = 0;
 	GLuint m_SolidRectShader = 0;
 
+	GLuint m_VBOPositionColor;
+
 	GLuint m_VBOLecture2 = 0;
 	GLuint m_VBOLecture3 = 0;
 	GLuint m_VBOLecture3_Scale = 0;
 	GLuint m_VBOLecture3_Color = 0;
+	GLuint m_VBOCircle = 0;
 
 	float time = 0;
 };
