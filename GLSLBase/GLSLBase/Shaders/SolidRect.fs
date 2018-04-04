@@ -3,16 +3,14 @@
 // f0 ---> {0,0,0,1} -----> f50 {0.5, 0,0,1} ----> f100 ==> {1,0,0,1}
 layout(location=0) out vec4 FragColor;
 
-uniform vec4 u_Color;
-
-varying vec4 v_Color;
+in vec2 v_FragPos;
 
 //uniform float u_Time;
 
 void main()
 {
-    FragColor = v_Color;
-    ////원만들기
+   
+   ////원만들기
     //if((v_Color.r * v_Color.r) + (v_Color.g * v_Color.g) < 0.25f && (v_Color.r * v_Color.r) + (v_Color.g * v_Color.g) > 0.25f - 0.01f )
     //{   
     //    FragColor = vec4(1, 1, 1, 1);
@@ -41,4 +39,12 @@ void main()
     //{ 
     //    FragColor = vec4(0, 0, 0, 1);
     //}
+
+    float value = sin(v_FragPos.x * 3.141592);
+    //lecture5
+    if(value > v_FragPos.y)
+        FragColor = vec4(1);
+    else
+        FragColor = vec4(0);
+
 }

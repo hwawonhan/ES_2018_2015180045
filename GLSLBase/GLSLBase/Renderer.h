@@ -18,6 +18,7 @@ public:
 
 	void Lecture2();
 	void Lecture4();
+	void Lecture5();
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -42,7 +43,10 @@ private:
 	GLuint m_VBOLecture3_Scale = 0;
 	GLuint m_VBOLecture3_Color = 0;
 	GLuint m_VBOCircle = 0;
+	GLuint m_VBOLecture5Points = 0;
+	GLuint m_VBOLecture5Rect = 0;
 
 	float time = 0;
+	int pointCount;
 };
 

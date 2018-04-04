@@ -37,11 +37,16 @@ bool Renderer::IsInitialized()
 void Renderer::CreateVertexBufferObjects()
 {
 	float circle[] = {
-		-0.5, -0.5, 0.f, -0.5, 0.5, 0.f, 0.5, 0.5, 0.f, //Triangle1
-		-0.5, -0.5, 0.f,  0.5, 0.5, 0.f, 0.5, -0.5, 0.f, //Triangle2
+		-1.0f, -1.0f, 0.f, -1.0f, 1.0f, 0.f, 1.0f, 1.0f, 0.f, //Triangle1
+		-1.0f, -1.0f, 0.f,  1.0f, 1.0f, 0.f, 1.0f, -1.0f, 0.f, //Triangle2
 	};
 	glGenBuffers(1, &m_VBOCircle);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOCircle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(circle), circle, GL_STATIC_DRAW);
+
+	//rect
+	glGenBuffers(1, &m_VBOLecture5Rect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(circle), circle, GL_STATIC_DRAW);
 
 	float linevertex[] = {
@@ -108,6 +113,21 @@ void Renderer::CreateVertexBufferObjects()
 	glGenBuffers(1, &m_VBOPositionColor);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOPositionColor);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(PositionColor), PositionColor, GL_STATIC_DRAW);
+
+
+	//Lecture5
+	pointCount = 100;
+	float *Points = new float[(pointCount+1) * 3];
+	for (int i = 0; i <= pointCount; ++i)
+	{
+		Points[i * 3] = -1.0f + (i*0.02);
+		Points[i * 3 + 1] = 0.0f;
+		Points[i * 3 + 2] = 0.0f;
+	}
+
+	glGenBuffers(1, &m_VBOLecture5Points);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * pointCount, Points, GL_STATIC_DRAW);
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -235,8 +255,6 @@ void Renderer::Test()
 	glDisableVertexAttribArray(attribPosition);
 }
 
-
-
 void Renderer::Lecture2()
 {
 	glUseProgram(m_SolidRectShader);
@@ -340,6 +358,7 @@ void Renderer::Lecture4()
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	//glDisableVertexAttribArray(posLocation);
 
+	//입력 한배열로 하기
 	glUseProgram(m_SolidRectShader);
 
 	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
@@ -355,6 +374,39 @@ void Renderer::Lecture4()
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(positionAttribID);
 	glDisableVertexAttribArray(colorAttribID);
+}
+
+void Renderer::Lecture5()
+{
+	//sin 움직이기
+	/*glUseProgram(m_SolidRectShader);
+
+	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	GLint TimeUiform = glGetUniformLocation(m_SolidRectShader, "u_Time");
+	glUniform1f(TimeUiform, time);
+	time += 0.003f;
+	glEnableVertexAttribArray(positionAttribID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
+	glVertexAttribPointer(positionAttribID, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glPointSize(4);
+	
+	glDrawArrays(GL_LINE_STRIP, 0, pointCount);
+	glDisableVertexAttribArray(positionAttribID);*/
+
+	glUseProgram(m_SolidRectShader);
+
+	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	GLint TimeUiform = glGetUniformLocation(m_SolidRectShader, "u_Time");
+	glUniform1f(TimeUiform, time);
+	time += 0.003f;
+	glEnableVertexAttribArray(positionAttribID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOCircle);
+	glVertexAttribPointer(positionAttribID, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(positionAttribID);
 }
 
 
