@@ -40,11 +40,13 @@ void main()
     //    FragColor = vec4(0, 0, 0, 1);
     //}
 
-    float value = sin(v_FragPos.x * 3.141592);
-    //lecture5
-    if(value > v_FragPos.y)
-        FragColor = vec4(1);
-    else
-        FragColor = vec4(0);
+    //sin ±×¸®±â
+    //float value = sin(v_FragPos.x * 3.141592);
+    ////lecture5
+    //if(value > v_FragPos.y)
+    //    FragColor = vec4(1);
+    //else
+    //    FragColor = vec4(0);
+    FragColor = vec4(1);
 
 }

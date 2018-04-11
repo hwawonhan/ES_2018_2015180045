@@ -115,19 +115,32 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(PositionColor), PositionColor, GL_STATIC_DRAW);
 
 
+	float CenterPoint[] = {
+		-1.0f, 0.0f, 0.0f,
+	};
+
+	glGenBuffers(1, &m_VBOCenterPoint);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOCenterPoint);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterPoint), CenterPoint, GL_STATIC_DRAW);
+
 	//Lecture5
-	pointCount = 100;
-	float *Points = new float[(pointCount+1) * 3];
+	pointCount = 500;
+	float *Points = new float[(pointCount+1) * 4];
 	for (int i = 0; i <= pointCount; ++i)
 	{
-		Points[i * 3] = -1.0f + (i*0.02);
-		Points[i * 3 + 1] = 0.0f;
-		Points[i * 3 + 2] = 0.0f;
+		Points[i * 4] = ( i * 0.02) -1;
+		Points[i * 4 + 1] = 0.0f;
+		Points[i * 4 + 2] = 0.0f;
+		Points[i * 4 + 3] = (float)rand() / (float)RAND_MAX;
+		if ((float)rand()/ (float)RAND_MAX - 0.5 > 0)
+			Points[i * 4 + 3] *= -1.0f;
 	}
 
 	glGenBuffers(1, &m_VBOLecture5Points);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * pointCount, Points, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * pointCount, Points, GL_STATIC_DRAW);
+
+
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -394,7 +407,7 @@ void Renderer::Lecture5()
 	glDrawArrays(GL_LINE_STRIP, 0, pointCount);
 	glDisableVertexAttribArray(positionAttribID);*/
 
-	glUseProgram(m_SolidRectShader);
+	/*glUseProgram(m_SolidRectShader);
 
 	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
 	GLint TimeUiform = glGetUniformLocation(m_SolidRectShader, "u_Time");
@@ -406,6 +419,25 @@ void Renderer::Lecture5()
 	glVertexAttribPointer(positionAttribID, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(positionAttribID);*/
+
+	glUseProgram(m_SolidRectShader);
+
+	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	GLint TimeUniform = glGetUniformLocation(m_SolidRectShader, "u_Time");
+	GLint RatioUniform = glGetUniformLocation(m_SolidRectShader, "u_Ratio");
+	GLint WidthUniform = glGetUniformLocation(m_SolidRectShader, "u_Width");
+	glUniform1f(TimeUniform, time);
+	glUniform1f(RatioUniform, 3.0f);
+	glUniform1f(WidthUniform, 0.2f);
+	/*if (time > 1)
+		time = -1;*/
+	time += 0.001;
+	glEnableVertexAttribArray(positionAttribID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
+	glVertexAttribPointer(positionAttribID, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_POINTS, 0, pointCount);
 	glDisableVertexAttribArray(positionAttribID);
 }
 

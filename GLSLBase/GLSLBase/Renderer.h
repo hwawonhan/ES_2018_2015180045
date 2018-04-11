@@ -37,6 +37,7 @@ private:
 	GLuint m_SolidRectShader = 0;
 
 	GLuint m_VBOPositionColor;
+	GLuint m_VBOCenterPoint = 0;
 
 	GLuint m_VBOLecture2 = 0;
 	GLuint m_VBOLecture3 = 0;
@@ -48,5 +49,7 @@ private:
 
 	float time = 0;
 	int pointCount;
+	bool timeflag;
+
 };
 
