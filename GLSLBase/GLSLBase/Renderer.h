@@ -19,6 +19,8 @@ public:
 	void Lecture2();
 	void Lecture4();
 	void Lecture5();
+
+	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y);
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -26,6 +28,7 @@ private:
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
 	void CreateVertexBufferObjects();
 	void GetGLPosition(float x, float y, float *newX, float *newY);
+
 
 	bool m_Initialized = false;
 	

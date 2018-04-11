@@ -16,17 +16,19 @@ but WITHOUT ANY WARRANTY.
 #include "Renderer.h"
 
 Renderer *g_Renderer = NULL;
+float ex, ey;
 
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, ex, ey);
 
 	// Renderer Test
 	//g_Renderer->Test();
 	//g_Renderer->Lecture2();
 	//g_Renderer->Lecture4();
-	g_Renderer->Lecture5();
+	//g_Renderer->Lecture5();
+	g_Renderer->drawParticleTrail(-1, 0, ey, ex);
 	glutSwapBuffers();
 }
 
@@ -37,6 +39,9 @@ void Idle(void)
 
 void MouseInput(int button, int state, int x, int y)
 {
+	
+	ex = -(y / 500.0f - 0.5f) * 2.0f;
+	ey = -(-x + 250) / 250.0f;
 	RenderScene();
 }
 

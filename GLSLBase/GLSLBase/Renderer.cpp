@@ -448,3 +448,28 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 	*newX = x * 2.f / m_WindowSizeX;
 	*newY = y * 2.f / m_WindowSizeY;
 }
+
+void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y)
+{
+	glUseProgram(m_SolidRectShader);
+
+	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	GLint TimeUniform = glGetUniformLocation(m_SolidRectShader, "u_Time");
+	GLint RatioUniform = glGetUniformLocation(m_SolidRectShader, "u_Ratio");
+	GLint WidthUniform = glGetUniformLocation(m_SolidRectShader, "u_Width");
+	GLint StartPointUniform = glGetUniformLocation(m_SolidRectShader, "u_startPoint");
+	GLint EndPointUniform = glGetUniformLocation(m_SolidRectShader, "u_endPoint");
+	glUniform1f(TimeUniform, time);
+	glUniform1f(RatioUniform, 4.0f);
+	glUniform1f(WidthUniform, 0.2f);
+	glUniform2f(StartPointUniform, start_x, start_y);
+	glUniform2f(EndPointUniform, end_x, end_y);
+
+	time += 0.001;
+	glEnableVertexAttribArray(positionAttribID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
+	glVertexAttribPointer(positionAttribID, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_POINTS, 0, pointCount);
+	glDisableVertexAttribArray(positionAttribID);
+}
