@@ -29,6 +29,24 @@
     <None Include="Shaders\SolidRect.fs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\STParticle.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\STParticle.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Test.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Test.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Save.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Save.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

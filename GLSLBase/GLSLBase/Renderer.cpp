@@ -19,7 +19,9 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	//Load shaders
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
-	
+	m_STParticleShader = CompileShaders("./Shaders/STParticle.vs", "./Shaders/STParticle.fs");
+	m_TestShader = CompileShaders("./Shaders/Test.vs", "./Shaders/Test.fs");
+
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -248,7 +250,7 @@ GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 	}
 
 	glUseProgram(ShaderProgram);
-	std::cout << filenameVS << ", " << filenameFS << " Shader compiling is done.";
+	std::cout << filenameVS << ", " << filenameFS << " Shader compiling is done.\n";
 
 	return ShaderProgram;
 }
@@ -421,12 +423,12 @@ void Renderer::Lecture5()
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDisableVertexAttribArray(positionAttribID);*/
 
-	glUseProgram(m_SolidRectShader);
+	glUseProgram(m_STParticleShader);
 
-	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
-	GLint TimeUniform = glGetUniformLocation(m_SolidRectShader, "u_Time");
-	GLint RatioUniform = glGetUniformLocation(m_SolidRectShader, "u_Ratio");
-	GLint WidthUniform = glGetUniformLocation(m_SolidRectShader, "u_Width");
+	int positionAttribID = glGetAttribLocation(m_STParticleShader, "a_Position");
+	GLint TimeUniform = glGetUniformLocation(m_STParticleShader, "u_Time");
+	GLint RatioUniform = glGetUniformLocation(m_STParticleShader, "u_Ratio");
+	GLint WidthUniform = glGetUniformLocation(m_STParticleShader, "u_Width");
 	glUniform1f(TimeUniform, time);
 	glUniform1f(RatioUniform, 3.0f);
 	glUniform1f(WidthUniform, 0.2f);
@@ -441,6 +443,25 @@ void Renderer::Lecture5()
 	glDisableVertexAttribArray(positionAttribID);
 }
 
+void Renderer::FragmentShaderAnimation()
+{
+	GLint shader = m_TestShader;
+	glUseProgram(shader);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+	GLint TimeUniform = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(TimeUniform, time);
+	time += 0.001;
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+
+}
+
 
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
@@ -451,14 +472,14 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 
 void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y)
 {
-	glUseProgram(m_SolidRectShader);
+	glUseProgram(m_STParticleShader);
 
-	int positionAttribID = glGetAttribLocation(m_SolidRectShader, "a_Position");
-	GLint TimeUniform = glGetUniformLocation(m_SolidRectShader, "u_Time");
-	GLint RatioUniform = glGetUniformLocation(m_SolidRectShader, "u_Ratio");
-	GLint WidthUniform = glGetUniformLocation(m_SolidRectShader, "u_Width");
-	GLint StartPointUniform = glGetUniformLocation(m_SolidRectShader, "u_startPoint");
-	GLint EndPointUniform = glGetUniformLocation(m_SolidRectShader, "u_endPoint");
+	int positionAttribID = glGetAttribLocation(m_STParticleShader, "a_Position");
+	GLint TimeUniform = glGetUniformLocation(m_STParticleShader, "u_Time");
+	GLint RatioUniform = glGetUniformLocation(m_STParticleShader, "u_Ratio");
+	GLint WidthUniform = glGetUniformLocation(m_STParticleShader, "u_Width");
+	GLint StartPointUniform = glGetUniformLocation(m_STParticleShader, "u_startPoint");
+	GLint EndPointUniform = glGetUniformLocation(m_STParticleShader, "u_endPoint");
 	glUniform1f(TimeUniform, time);
 	glUniform1f(RatioUniform, 4.0f);
 	glUniform1f(WidthUniform, 0.2f);

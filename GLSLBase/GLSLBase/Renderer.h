@@ -19,6 +19,7 @@ public:
 	void Lecture2();
 	void Lecture4();
 	void Lecture5();
+	void FragmentShaderAnimation();
 
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y);
 private:
@@ -54,5 +55,7 @@ private:
 	int pointCount;
 	bool timeflag;
 
+	GLuint m_STParticleShader = 0;
+	GLuint m_TestShader = 0;
 };
 

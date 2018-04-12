@@ -28,7 +28,8 @@ void RenderScene(void)
 	//g_Renderer->Lecture2();
 	//g_Renderer->Lecture4();
 	//g_Renderer->Lecture5();
-	g_Renderer->drawParticleTrail(-1, 0, ey, ex);
+	//g_Renderer->drawParticleTrail(-1, 0, ey, ex);
+	g_Renderer->FragmentShaderAnimation();
 	glutSwapBuffers();
 }
 
