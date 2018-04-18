@@ -20,8 +20,9 @@ public:
 	void Lecture4();
 	void Lecture5();
 	void FragmentShaderAnimation();
+	void WaveEffect(float* points, float time);
 
-	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y);
+	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -57,5 +58,6 @@ private:
 
 	GLuint m_STParticleShader = 0;
 	GLuint m_TestShader = 0;
+	GLuint m_WaveEffectShader = 0;
 };
 

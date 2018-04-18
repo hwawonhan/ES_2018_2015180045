@@ -21,6 +21,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
 	m_STParticleShader = CompileShaders("./Shaders/STParticle.vs", "./Shaders/STParticle.fs");
 	m_TestShader = CompileShaders("./Shaders/Test.vs", "./Shaders/Test.fs");
+	m_WaveEffectShader = CompileShaders("./Shaders/WaveEffect.vs", "./Shaders/WaveEffect.fs");
 
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -448,10 +449,17 @@ void Renderer::FragmentShaderAnimation()
 	GLint shader = m_TestShader;
 	glUseProgram(shader);
 
-	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+
 	GLint TimeUniform = glGetUniformLocation(shader, "u_Time");
 	glUniform1f(TimeUniform, time);
 	time += 0.001;
+
+	float points[] = { -1, -1, 4, 1, 1, 6, -1, 1, 2, 1, -1, 4 };
+	GLint uniformPoint = glGetUniformLocation(shader, "u_Points");
+	//glUniform2f(uniformPoint, 0.5, 0);
+	glUniform3fv(uniformPoint, 4, points);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(posLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
 	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -462,6 +470,26 @@ void Renderer::FragmentShaderAnimation()
 
 }
 
+void Renderer::WaveEffect(float* points, float time) 
+{
+	GLint shader = m_TestShader;
+	glUseProgram(shader);
+
+
+	GLint TimeUniform = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(TimeUniform, time);
+
+	GLint uniformPoint = glGetUniformLocation(shader, "u_Points");
+	glUniform3fv(uniformPoint, 4, points);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
@@ -470,7 +498,7 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 	*newY = y * 2.f / m_WindowSizeY;
 }
 
-void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y)
+void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time)
 {
 	glUseProgram(m_STParticleShader);
 
@@ -485,8 +513,7 @@ void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, floa
 	glUniform1f(WidthUniform, 0.2f);
 	glUniform2f(StartPointUniform, start_x, start_y);
 	glUniform2f(EndPointUniform, end_x, end_y);
-
-	time += 0.001;
+	glPointSize(2);
 	glEnableVertexAttribArray(positionAttribID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);

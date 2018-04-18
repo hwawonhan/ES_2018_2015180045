@@ -17,19 +17,16 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 float ex, ey;
-
+float gTime = 0.0f;
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, ex, ey);
 
-	// Renderer Test
-	//g_Renderer->Test();
-	//g_Renderer->Lecture2();
-	//g_Renderer->Lecture4();
-	//g_Renderer->Lecture5();
-	//g_Renderer->drawParticleTrail(-1, 0, ey, ex);
-	g_Renderer->FragmentShaderAnimation();
+	float points[] = { 0, 0, 8, 1, 1, 8, 1, 0, 8, 0, 1, 8 };
+	g_Renderer->WaveEffect(points, gTime);
+	g_Renderer->drawParticleTrail(-1, 0, 0.5, 0.5, gTime);
+	gTime += 0.005f;
 	glutSwapBuffers();
 }
 

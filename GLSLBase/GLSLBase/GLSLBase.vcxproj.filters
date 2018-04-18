@@ -47,6 +47,12 @@
     <None Include="Shaders\Save.vs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\WaveEffect.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\WaveEffect.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
