@@ -21,6 +21,7 @@ public:
 	void Lecture5();
 	void FragmentShaderAnimation();
 	void WaveEffect(float* points, float time);
+	void Rader(float* points, float time);
 
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
@@ -59,5 +60,6 @@ private:
 	GLuint m_STParticleShader = 0;
 	GLuint m_TestShader = 0;
 	GLuint m_WaveEffectShader = 0;
+	GLuint m_RaderShader = 0;
 };
 

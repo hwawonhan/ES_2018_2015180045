@@ -22,7 +22,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_STParticleShader = CompileShaders("./Shaders/STParticle.vs", "./Shaders/STParticle.fs");
 	m_TestShader = CompileShaders("./Shaders/Test.vs", "./Shaders/Test.fs");
 	m_WaveEffectShader = CompileShaders("./Shaders/WaveEffect.vs", "./Shaders/WaveEffect.fs");
-
+	m_RaderShader = CompileShaders("./Shaders/Rader.vs", "./Shaders/Rader.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -473,6 +473,26 @@ void Renderer::FragmentShaderAnimation()
 void Renderer::WaveEffect(float* points, float time) 
 {
 	GLint shader = m_TestShader;
+	glUseProgram(shader);
+
+
+	GLint TimeUniform = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(TimeUniform, time);
+
+	GLint uniformPoint = glGetUniformLocation(shader, "u_Points");
+	glUniform3fv(uniformPoint, 4, points);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::Rader(float * points, float time)
+{
+	GLint shader = m_RaderShader;
 	glUseProgram(shader);
 
 
