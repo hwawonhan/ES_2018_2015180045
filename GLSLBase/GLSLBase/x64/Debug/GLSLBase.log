@@ -1,1 +1,3 @@
-﻿  GLSLBase.vcxproj -> C:\Users\hwawo\Desktop\ES_2018\ES_2018_2015180045\GLSLBase\x64\Debug\GLSLBase.exe
+﻿  GLSLBase.cpp
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\glslbase.cpp(25): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+  GLSLBase.vcxproj -> C:\Users\hwawo\Desktop\ES_2018\ES_2018_2015180045\GLSLBase\x64\Debug\GLSLBase.exe

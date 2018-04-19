@@ -20,12 +20,13 @@ float ex, ey;
 float gTime = 0.0f;
 void RenderScene(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, ex, ey);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	g_Renderer->filAll(1, 1, 1, 0.01);
 
 	float points[] = { 0.5, 0.5, 6, -0.5, 0.5, 8, 0.5, -0.5, 5, -0.5, -0.5, 7 };
-	/*g_Renderer->WaveEffect(points, gTime);
-	g_Renderer->drawParticleTrail(-1, 0, 0.5, 0.5, gTime);*/
+	/*g_Renderer->WaveEffect(points, gTime);*/
+	//g_Renderer->drawParticleTrail(-1, 0, 1, 0, gTime);
 	g_Renderer->Rader(points, gTime);
 	gTime += 0.0005f;
 	glutSwapBuffers();

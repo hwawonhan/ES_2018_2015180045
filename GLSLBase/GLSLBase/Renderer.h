@@ -23,6 +23,8 @@ public:
 	void WaveEffect(float* points, float time);
 	void Rader(float* points, float time);
 
+	void filAll(float r, float g, float b, float a);
+
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -38,20 +40,21 @@ private:
 	unsigned int m_WindowSizeX = 0;
 	unsigned int m_WindowSizeY = 0;
 
-	GLuint m_VBORect = 0;
 	GLuint m_VBOLine = 0;
 	GLuint m_SolidRectShader = 0;
-
 	GLuint m_VBOPositionColor;
 	GLuint m_VBOCenterPoint = 0;
-
 	GLuint m_VBOLecture2 = 0;
 	GLuint m_VBOLecture3 = 0;
 	GLuint m_VBOLecture3_Scale = 0;
 	GLuint m_VBOLecture3_Color = 0;
 	GLuint m_VBOCircle = 0;
 	GLuint m_VBOLecture5Points = 0;
-	GLuint m_VBOLecture5Rect = 0;
+	GLuint m_VBOFillRect = 0;
+
+	//lecture6
+	GLuint m_VBOPosTex = 0;
+	GLuint m_TexCheckerboard;
 
 	float time = 0;
 	int pointCount;
@@ -61,5 +64,6 @@ private:
 	GLuint m_TestShader = 0;
 	GLuint m_WaveEffectShader = 0;
 	GLuint m_RaderShader = 0;
+	GLuint m_FillAllShader = 0;
 };
 

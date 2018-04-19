@@ -59,6 +59,18 @@
     <None Include="Shaders\Rader.vs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\FillAll.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\FillAll.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\TexturedRect.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\TexturedRect.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

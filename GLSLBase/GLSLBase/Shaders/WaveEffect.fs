@@ -1,6 +1,5 @@
 #version 330
 
-// f0 ---> {0,0,0,1} -----> f50 {0.5, 0,0,1} ----> f100 ==> {1,0,0,1}
 layout(location=0) out vec4 FragColor;
 
 uniform float u_Time;

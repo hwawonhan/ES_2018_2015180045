@@ -19,22 +19,24 @@ void main()
         float r = 1 - length(segment);
         if( r > 0.95 )
         {
-            r = 10;
+            r = 0.8;
         }
         else
         {
             r = 0;
         }
-        pointColor += r ;
+        pointColor += r;
     }
 
     float temp = length(v_Color);
     float newTime = fract(u_Time); //0~1
-    if(newTime + 0.05 > temp && newTime - 0.05 < temp)
+    if(newTime + 0.02 > temp && newTime - 0.02 < temp)
     {
-        finalColor = 0.1 * pointColor + 0.1;
+        finalColor = 0.4 * pointColor + 0.2;
     }
 
+    if(finalColor == 0)
+        discard;
    
     FragColor = vec4(finalColor, finalColor, finalColor, 1);
 }

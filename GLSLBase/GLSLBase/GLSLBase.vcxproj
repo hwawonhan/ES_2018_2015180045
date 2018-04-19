@@ -171,6 +171,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\FillAll.fs" />
+    <None Include="Shaders\FillAll.vs" />
     <None Include="Shaders\Rader.fs" />
     <None Include="Shaders\Rader.vs" />
     <None Include="Shaders\Save.fs" />
@@ -181,6 +183,8 @@
     <None Include="Shaders\STParticle.vs" />
     <None Include="Shaders\Test.fs" />
     <None Include="Shaders\Test.vs" />
+    <None Include="Shaders\TexturedRect.fs" />
+    <None Include="Shaders\TexturedRect.vs" />
     <None Include="Shaders\WaveEffect.fs" />
     <None Include="Shaders\WaveEffect.vs" />
   </ItemGroup>

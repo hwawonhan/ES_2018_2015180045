@@ -23,10 +23,11 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_TestShader = CompileShaders("./Shaders/Test.vs", "./Shaders/Test.fs");
 	m_WaveEffectShader = CompileShaders("./Shaders/WaveEffect.vs", "./Shaders/WaveEffect.fs");
 	m_RaderShader = CompileShaders("./Shaders/Rader.vs", "./Shaders/Rader.fs");
+	m_FillAllShader = CompileShaders("./Shaders/FillAll.vs", "./Shaders/FillAll.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
-	if (m_SolidRectShader > 0 && m_VBORect > 0)
+	if (m_SolidRectShader > 0 && m_VBOFillRect > 0)
 	{
 		m_Initialized = true;
 	}
@@ -39,6 +40,7 @@ bool Renderer::IsInitialized()
 
 void Renderer::CreateVertexBufferObjects()
 {
+
 	float circle[] = {
 		-1.0f, -1.0f, 0.f, -1.0f, 1.0f, 0.f, 1.0f, 1.0f, 0.f, //Triangle1
 		-1.0f, -1.0f, 0.f,  1.0f, 1.0f, 0.f, 1.0f, -1.0f, 0.f, //Triangle2
@@ -47,10 +49,14 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOCircle);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(circle), circle, GL_STATIC_DRAW);
 
+	float fillRect[] = {
+		-1.0f, -1.0f, 0.f, -1.0f, 1.0f, 0.f, 1.0f, 1.0f, 0.f, //Triangle1
+		-1.0f, -1.0f, 0.f,  1.0f, 1.0f, 0.f, 1.0f, -1.0f, 0.f, //Triangle2
+	};
 	//rect
-	glGenBuffers(1, &m_VBOLecture5Rect);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(circle), circle, GL_STATIC_DRAW);
+	glGenBuffers(1, &m_VBOFillRect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(fillRect), fillRect, GL_STATIC_DRAW);
 
 	float linevertex[] = {
 		-0.5f, 0.0f, 0.0f, 0.0f,
@@ -63,17 +69,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLine);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(linevertex), linevertex, GL_STATIC_DRAW);
 
-	float rect[]
-		=
-	{
-		-0.5, -0.5, 0.f, -0.5, 0.5, 0.f, 0.5, 0.5, 0.f, //Triangle1
-		-0.5, -0.5, 0.f,  0.5, 0.5, 0.f, 0.5, -0.5, 0.f, //Triangle2
-	};
-
-	glGenBuffers(1, &m_VBORect);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(rect), rect, GL_STATIC_DRAW);
-
+	
 	float vertices[] 
 		=
 		{ 0.0f, 0.0f ,0.0f ,1.0f ,0.0f ,0.0f ,1.0f ,1.0f ,0.0f };
@@ -127,11 +123,11 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterPoint), CenterPoint, GL_STATIC_DRAW);
 
 	//Lecture5
-	pointCount = 500;
+	pointCount = 200;
 	float *Points = new float[(pointCount+1) * 4];
 	for (int i = 0; i <= pointCount; ++i)
 	{
-		Points[i * 4] = ( i * 0.02) -1;
+		Points[i * 4] = ( i * 0.01) -1;
 		Points[i * 4 + 1] = 0.0f;
 		Points[i * 4 + 2] = 0.0f;
 		Points[i * 4 + 3] = (float)rand() / (float)RAND_MAX;
@@ -143,6 +139,40 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * pointCount, Points, GL_STATIC_DRAW);
 
+	static const GLulong checkerboard[] =
+	{
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF
+	};
+
+	glGenTextures(1, &m_TexCheckerboard);
+	glBindTexture(GL_TEXTURE_2D, m_TexCheckerboard);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerboard);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	float size = 1;
+	float rectPosTex[] = {
+		-size, -size, 0.f, 1.0f, 0, 0,
+		size, -size, 0, 1, 1, 0,
+		size, size, 0, 1, 1, 1,
+
+		-size, -size, 0, 1, 0, 0,
+		size, size, 0, 1, 1, 1,
+		-size, size, 1, 0, 0, 1,
+	};
+	//rect
+	glGenBuffers(1, &m_VBOFillRect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(fillRect), fillRect, GL_STATIC_DRAW);
 
 }
 
@@ -449,6 +479,7 @@ void Renderer::FragmentShaderAnimation()
 	GLint shader = m_TestShader;
 	glUseProgram(shader);
 
+	
 
 	GLint TimeUniform = glGetUniformLocation(shader, "u_Time");
 	glUniform1f(TimeUniform, time);
@@ -461,11 +492,10 @@ void Renderer::FragmentShaderAnimation()
 
 	GLint posLocation = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(posLocation);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
 	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
 
 
 }
@@ -484,7 +514,7 @@ void Renderer::WaveEffect(float* points, float time)
 
 	GLint posLocation = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(posLocation);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
 	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -504,10 +534,31 @@ void Renderer::Rader(float * points, float time)
 
 	GLint posLocation = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(posLocation);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Rect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
 	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::filAll(float r, float g, float b, float a)
+{
+	GLint shader = m_FillAllShader;
+	glUseProgram(shader);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GLint uniformColor = glGetUniformLocation(shader, "u_Color");
+	glUniform4f(uniformColor, r, g, b, a);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisable(GL_BLEND);
+
 }
 
 
@@ -521,7 +572,6 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time)
 {
 	glUseProgram(m_STParticleShader);
-
 	int positionAttribID = glGetAttribLocation(m_STParticleShader, "a_Position");
 	GLint TimeUniform = glGetUniformLocation(m_STParticleShader, "u_Time");
 	GLint RatioUniform = glGetUniformLocation(m_STParticleShader, "u_Ratio");
