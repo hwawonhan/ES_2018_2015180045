@@ -22,7 +22,7 @@ public:
 	void FragmentShaderAnimation();
 	void WaveEffect(float* points, float time);
 	void Rader(float* points, float time);
-
+	void DrawTexture();
 	void filAll(float r, float g, float b, float a);
 
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
@@ -51,6 +51,7 @@ private:
 	GLuint m_VBOCircle = 0;
 	GLuint m_VBOLecture5Points = 0;
 	GLuint m_VBOFillRect = 0;
+	GLuint m_VBOTextureRect = 0;
 
 	//lecture6
 	GLuint m_VBOPosTex = 0;
@@ -65,5 +66,6 @@ private:
 	GLuint m_WaveEffectShader = 0;
 	GLuint m_RaderShader = 0;
 	GLuint m_FillAllShader = 0;
+	GLuint m_TextureShader = 0;
 };
 

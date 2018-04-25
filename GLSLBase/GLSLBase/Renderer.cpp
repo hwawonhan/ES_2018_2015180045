@@ -24,6 +24,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_WaveEffectShader = CompileShaders("./Shaders/WaveEffect.vs", "./Shaders/WaveEffect.fs");
 	m_RaderShader = CompileShaders("./Shaders/Rader.vs", "./Shaders/Rader.fs");
 	m_FillAllShader = CompileShaders("./Shaders/FillAll.vs", "./Shaders/FillAll.fs");
+	m_TextureShader = CompileShaders("./Shaders/TexturedRect.vs", "./Shaders/TexturedRect.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -156,23 +157,27 @@ void Renderer::CreateVertexBufferObjects()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerboard);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);*/
+	/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);*/
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	float size = 1;
 	float rectPosTex[] = {
-		-size, -size, 0.f, 1.0f, 0, 0,
+		-size, -size, 0, 1, 0, 0,	//x, y, z, w, s, t
 		size, -size, 0, 1, 1, 0,
 		size, size, 0, 1, 1, 1,
 
 		-size, -size, 0, 1, 0, 0,
 		size, size, 0, 1, 1, 1,
-		-size, size, 1, 0, 0, 1,
+		-size, size, 0, 1, 0, 1,
 	};
 	//rect
-	glGenBuffers(1, &m_VBOFillRect);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(fillRect), fillRect, GL_STATIC_DRAW);
+	glGenBuffers(1, &m_VBOTextureRect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTextureRect);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(rectPosTex), rectPosTex, GL_STATIC_DRAW);
 
 }
 
@@ -540,6 +545,31 @@ void Renderer::Rader(float * points, float time)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+void Renderer::DrawTexture()
+{
+	GLuint shader = m_TextureShader;
+	glUseProgram(shader);
+
+	GLint uniformSampler = glGetUniformLocation(shader, "u_Texture");
+	glUniform1i(uniformSampler, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_TexCheckerboard);
+
+	GLint attribPosition = glGetAttribLocation(shader, "a_Position");
+	GLint attribTexPos = glGetAttribLocation(shader, "a_TexPos");
+
+	glEnableVertexAttribArray(attribPosition);
+	glEnableVertexAttribArray(attribTexPos);
+
+	//GLint uniformTexture = glGetAttribLocation(shader, "");
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTextureRect);
+	glVertexAttribPointer(attribPosition, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+	glVertexAttribPointer(attribTexPos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (GLvoid*)(sizeof(GL_FLOAT)*4));
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 void Renderer::filAll(float r, float g, float b, float a)
 {
 	GLint shader = m_FillAllShader;
@@ -560,6 +590,7 @@ void Renderer::filAll(float r, float g, float b, float a)
 	glDisable(GL_BLEND);
 
 }
+
 
 
 

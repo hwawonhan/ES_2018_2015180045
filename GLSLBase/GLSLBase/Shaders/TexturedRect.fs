@@ -2,11 +2,13 @@
 
 layout(location=0) out vec4 FragColor;
 
-uniform vec4 u_Color;
+in vec2 v_TexPos;
+uniform sampler2D u_Texture;
 
 void main()
 {
-    FragColor = u_Color;
+    //FragColor = texture(u_Texture, fract(v_TexPos*2));
+    FragColor = texture(u_Texture, v_TexPos*2);
 }
 
 
