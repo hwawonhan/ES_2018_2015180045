@@ -53,6 +53,7 @@ private:
 	GLuint m_VBOLecture5Points = 0;
 	GLuint m_VBOFillRect = 0;
 	GLuint m_VBOTextureRect = 0;
+	GLuint m_VBO_Q1 = 0;
 
 	//lecture6
 	GLuint m_VBOPosTex = 0;
@@ -69,5 +70,6 @@ private:
 	GLuint m_FillAllShader = 0;
 	GLuint m_TextureShader = 0;
 	GLuint m_PrecticeShader = 0;
+	GLuint m_middleexamShader = 0;
 };
 

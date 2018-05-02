@@ -26,7 +26,7 @@ void RenderScene(void)
 
 	float points[] = { 0.5, 0.5, 6, -0.5, 0.5, 8, 0.5, -0.5, 5, -0.5, -0.5, 7 };
 	//g_Renderer->WaveEffect(points, gTime);
-	g_Renderer->drawParticleTrail(0, 0, 0, 1, gTime);
+	//g_Renderer->drawParticleTrail(0, 0, 0, 1, gTime);
 	//g_Renderer->Rader(points, gTime);
 	// g_Renderer->DrawTexture();
 	//g_Renderer->Prectice(gTime);

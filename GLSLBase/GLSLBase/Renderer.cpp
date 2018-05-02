@@ -180,6 +180,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTextureRect);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(rectPosTex), rectPosTex, GL_STATIC_DRAW);
 
+
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
