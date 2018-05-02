@@ -25,6 +25,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_RaderShader = CompileShaders("./Shaders/Rader.vs", "./Shaders/Rader.fs");
 	m_FillAllShader = CompileShaders("./Shaders/FillAll.vs", "./Shaders/FillAll.fs");
 	m_TextureShader = CompileShaders("./Shaders/TexturedRect.vs", "./Shaders/TexturedRect.fs");
+	m_PrecticeShader = CompileShaders("./Shaders/Prectice.vs", "./Shaders/Prectice.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -124,11 +125,11 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterPoint), CenterPoint, GL_STATIC_DRAW);
 
 	//Lecture5
-	pointCount = 200;
+	pointCount = 20;
 	float *Points = new float[(pointCount+1) * 4];
 	for (int i = 0; i <= pointCount; ++i)
 	{
-		Points[i * 4] = ( i * 0.01) -1;
+		Points[i * 4] = ((float)i / pointCount * 2) - 1.0f;
 		Points[i * 4 + 1] = 0.0f;
 		Points[i * 4 + 2] = 0.0f;
 		Points[i * 4 + 3] = (float)rand() / (float)RAND_MAX;
@@ -589,6 +590,23 @@ void Renderer::filAll(float r, float g, float b, float a)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDisable(GL_BLEND);
 
+}
+
+void Renderer::Prectice(float time)
+{
+	GLuint shader = m_PrecticeShader;
+
+	glUseProgram(shader);
+
+	GLuint TimeLocation = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(TimeLocation, time);
+
+	GLint posLocation = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(posLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFillRect);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 

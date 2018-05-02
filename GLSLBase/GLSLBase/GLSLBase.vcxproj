@@ -173,6 +173,8 @@
   <ItemGroup>
     <None Include="Shaders\FillAll.fs" />
     <None Include="Shaders\FillAll.vs" />
+    <None Include="Shaders\Prectice.fs" />
+    <None Include="Shaders\Prectice.vs" />
     <None Include="Shaders\Rader.fs" />
     <None Include="Shaders\Rader.vs" />
     <None Include="Shaders\Save.fs" />

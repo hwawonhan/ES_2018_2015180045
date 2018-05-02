@@ -1,6 +1,5 @@
 #version 330
 
-// f0 ---> {0,0,0,1} -----> f50 {0.5, 0,0,1} ----> f100 ==> {1,0,0,1}
 layout(location=0) out vec4 FragColor;
 
 uniform float u_Time;
@@ -10,7 +9,7 @@ in vec2 v_Color;
 
 void main()
 {
-    float finalColor = 0;
+    
     float pointColor = 0;
 
     for(int i = 0; i < 4; ++i)
@@ -28,6 +27,8 @@ void main()
         pointColor += r;
     }
 
+
+    float finalColor = 0;
     float temp = length(v_Color);
     float newTime = fract(u_Time); //0~1
     if(newTime + 0.02 > temp && newTime - 0.02 < temp)

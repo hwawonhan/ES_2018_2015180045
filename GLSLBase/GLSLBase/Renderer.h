@@ -24,6 +24,7 @@ public:
 	void Rader(float* points, float time);
 	void DrawTexture();
 	void filAll(float r, float g, float b, float a);
+	void Prectice(float time);
 
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
@@ -67,5 +68,6 @@ private:
 	GLuint m_RaderShader = 0;
 	GLuint m_FillAllShader = 0;
 	GLuint m_TextureShader = 0;
+	GLuint m_PrecticeShader = 0;
 };
 
