@@ -77,6 +77,12 @@
     <None Include="Shaders\Prectice.vs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\Smile.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Smile.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

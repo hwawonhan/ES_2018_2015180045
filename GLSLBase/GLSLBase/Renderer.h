@@ -25,7 +25,7 @@ public:
 	void DrawTexture();
 	void filAll(float r, float g, float b, float a);
 	void Prectice(float time);
-
+	void drawSmile();
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -53,8 +53,8 @@ private:
 	GLuint m_VBOLecture5Points = 0;
 	GLuint m_VBOFillRect = 0;
 	GLuint m_VBOTextureRect = 0;
-	GLuint m_VBO_Q1 = 0;
-
+	GLuint m_VBOSmileTexture = 0;
+	GLuint m_VBO_PosTex = 0;
 	//lecture6
 	GLuint m_VBOPosTex = 0;
 	GLuint m_TexCheckerboard;
@@ -70,6 +70,6 @@ private:
 	GLuint m_FillAllShader = 0;
 	GLuint m_TextureShader = 0;
 	GLuint m_PrecticeShader = 0;
-	GLuint m_middleexamShader = 0;
+	GLuint m_SmileShader = 0;
 };
 

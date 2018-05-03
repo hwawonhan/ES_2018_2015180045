@@ -179,6 +179,8 @@
     <None Include="Shaders\Rader.vs" />
     <None Include="Shaders\Save.fs" />
     <None Include="Shaders\Save.vs" />
+    <None Include="Shaders\Smile.fs" />
+    <None Include="Shaders\Smile.vs" />
     <None Include="Shaders\SolidRect.fs" />
     <None Include="Shaders\SolidRect.vs" />
     <None Include="Shaders\STParticle.fs" />
