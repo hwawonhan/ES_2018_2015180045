@@ -28,7 +28,9 @@ void RenderScene(void)
 	//g_Renderer->WaveEffect(points, gTime);
 	//g_Renderer->drawParticleTrail(0, 0, 0, 1, gTime);
 	//g_Renderer->Rader(points, gTime);
-	g_Renderer->drawSmile();
+	//g_Renderer->drawSmile();
+	//g_Renderer->Lecture8(gTime);
+	g_Renderer->textureAnimation();
 	//g_Renderer->Prectice(gTime);
 	gTime += 0.0005f;
 	glutSwapBuffers();

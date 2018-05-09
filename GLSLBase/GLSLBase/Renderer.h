@@ -26,6 +26,8 @@ public:
 	void filAll(float r, float g, float b, float a);
 	void Prectice(float time);
 	void drawSmile();
+	void Lecture8(float time);
+	void textureAnimation();
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -55,11 +57,24 @@ private:
 	GLuint m_VBOTextureRect = 0;
 	GLuint m_VBOSmileTexture = 0;
 	GLuint m_VBO_PosTex = 0;
+	GLuint gShaderProgram = 0;
 	//lecture6
 	GLuint m_VBOPosTex = 0;
 	GLuint m_TexCheckerboard;
+	//lecture7
+	GLuint gTextureID = 0;
+	GLuint gTextureID1 = 0;
+	GLuint gTextureID2 = 0;
+	GLuint gTextureID3 = 0;
+	GLuint gTextureID4 = 0;
+	GLuint gTextureID5 = 0;
+	GLuint VBO_PosTex = 0;
+
+	GLuint VBO_PosTexAnimation = 0;
+	GLuint gTextureIDTotal = 0;
 
 	float time = 0;
+	float gTimeStamp = 0;
 	int pointCount;
 	bool timeflag;
 
@@ -71,5 +86,6 @@ private:
 	GLuint m_TextureShader = 0;
 	GLuint m_PrecticeShader = 0;
 	GLuint m_SmileShader = 0;
+	GLuint m_AnimationTextureShader = 0;
 };
 

@@ -17,6 +17,7 @@ void main()
     //¹ÝÂ©·Á¼­ ÂîºÎ
     //float tX = fract(vTexPos.x * 2);
     //float tY = (1 - floor(vTexPos.x * 2)) * 0.5 + vTexPos.y * 0.5;
+    //3µîºÐ ÂîºÎ
     float tX = fract(vTexPos.x * 3);
     float tY = (2 - floor(vTexPos.x * 3)) / 3 + vTexPos.y / 3;
     FragColor = texture(uTexture, vec2(tX,tY));
