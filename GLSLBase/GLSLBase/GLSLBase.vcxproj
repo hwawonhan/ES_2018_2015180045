@@ -171,6 +171,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\brickPatton.fs" />
+    <None Include="Shaders\brickPatton.vs" />
     <None Include="Shaders\FillAll.fs" />
     <None Include="Shaders\FillAll.vs" />
     <None Include="Shaders\Lecture7.fs" />
@@ -193,6 +195,8 @@
     <None Include="Shaders\TextureAnimation.vs" />
     <None Include="Shaders\TexturedRect.fs" />
     <None Include="Shaders\TexturedRect.vs" />
+    <None Include="Shaders\Textures.fs" />
+    <None Include="Shaders\Textures.vs" />
     <None Include="Shaders\WaveEffect.fs" />
     <None Include="Shaders\WaveEffect.vs" />
   </ItemGroup>

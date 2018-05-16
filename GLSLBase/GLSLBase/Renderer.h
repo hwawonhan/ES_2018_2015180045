@@ -27,8 +27,10 @@ public:
 	void Prectice(float time);
 	void drawSmile();
 	void Lecture8(float time);
+	void drawBMP();
 	void textureAnimation();
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
+	void drawBrick();
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -73,6 +75,12 @@ private:
 	GLuint VBO_PosTexAnimation = 0;
 	GLuint gTextureIDTotal = 0;
 
+	//lecture8
+	GLuint m_Texboy = 0;
+	GLuint m_Texgirl = 0;
+	GLuint m_Texbrick = 0;
+
+
 	float time = 0;
 	float gTimeStamp = 0;
 	int pointCount;
@@ -87,5 +95,7 @@ private:
 	GLuint m_PrecticeShader = 0;
 	GLuint m_SmileShader = 0;
 	GLuint m_AnimationTextureShader = 0;
+	GLuint m_BMPShader = 0;
+	GLuint m_BrickPattonShader = 0;
 };
 

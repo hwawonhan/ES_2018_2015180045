@@ -12,6 +12,6 @@ void main()
 {
     //vec2 newTexPos = vec2(vTexPos.x, uTime/6.0 + vTexPos.y/6.0);
     //FragColor = texture(uTexSampler, newTexPos);
-    vec2 newTexPos = vec2(fract(vTexPos.x * 2), vTexPos.y/2.0);
+    vec2 newTexPos = vec2(fract(vTexPos.x * 2),  floor(vTexPos.x * 2) /2 + vTexPos.y / 2);
     FragColor = texture(uTexSampler, newTexPos);
 }

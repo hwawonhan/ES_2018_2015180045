@@ -1,6 +1,73 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
+
+unsigned char * loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight)
+{
+	printf("Reading image %s\n", imagepath);
+	outWidth = -1;
+	outHeight = -1;
+	// Data read from the header of the BMP file
+	unsigned char header[54];
+	unsigned int dataPos;
+	unsigned int imageSize;
+	// Actual RGB data
+	unsigned char * data;
+
+	// Open the file
+	FILE * file = NULL;
+	fopen_s(&file, imagepath, "rb");
+	if (!file)
+	{
+		printf("Image could not be opened\n");
+		return NULL;
+	}
+
+	if (fread(header, 1, 54, file) != 54)
+	{
+		printf("Not a correct BMP file\n");
+		return NULL;
+	}
+
+	if (header[0] != 'B' || header[1] != 'M')
+	{
+		printf("Not a correct BMP file\n");
+		return NULL;
+	}
+
+	if (*(int*)&(header[0x1E]) != 0)
+	{
+		printf("Not a correct BMP file\n");
+		return NULL;
+	}
+
+	if (*(int*)&(header[0x1C]) != 24)
+	{
+		printf("Not a correct BMP file\n");
+		return NULL;
+	}
+
+	dataPos = *(int*)&(header[0x0A]);
+	imageSize = *(int*)&(header[0x22]);
+	outWidth = *(int*)&(header[0x12]);
+	outHeight = *(int*)&(header[0x16]);
+
+	if (imageSize == 0)
+		imageSize = outWidth*outHeight * 3;
+
+	if (dataPos == 0)
+		dataPos = 54;
+
+	data = new unsigned char[imageSize];
+
+	fread(data, 1, imageSize, file);
+
+	fclose(file);
+
+	return data;
+}
+
+
 Renderer::Renderer(int windowSizeX, int windowSizeY)
 {
 	Initialize(windowSizeX, windowSizeY);
@@ -29,6 +96,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_SmileShader = CompileShaders("./Shaders/Smile.vs", "./Shaders/Smile.fs");
 	gShaderProgram = CompileShaders("./Shaders/Lecture7.vs", "./Shaders/Lecture7.fs");
 	m_AnimationTextureShader = CompileShaders("./Shaders/TextureAnimation.vs", "./Shaders/TextureAnimation.fs");
+	m_BMPShader = CompileShaders("./Shaders/Textures.vs", "./Shaders/Textures.fs");
+	m_BrickPattonShader = CompileShaders("./Shaders/brickPatton.vs", "./Shaders/brickPatton.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -424,6 +493,33 @@ void Renderer::CreateVertexBufferObjects()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+	unsigned int width, height;
+	unsigned char* bmp = loadBMPRaw("./Textures/boy.bmp", width, height);
+	glGenTextures(1, &m_Texboy);
+	glBindTexture(GL_TEXTURE_2D, m_Texboy);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	unsigned char* bmp1 = loadBMPRaw("./Textures/girl.bmp", width, height);
+	glGenTextures(2, &m_Texgirl);
+	glBindTexture(GL_TEXTURE_2D, m_Texgirl);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	unsigned char* bmp3 = loadBMPRaw("./Textures/brick.bmp", width, height);
+	glGenTextures(2, &m_Texbrick);
+	glBindTexture(GL_TEXTURE_2D, m_Texbrick);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp3);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -917,6 +1013,40 @@ void Renderer::Lecture8(float time)
 
 }
 
+void Renderer::drawBMP()
+{
+	glUseProgram(m_BMPShader);
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_Texboy);
+
+	int uniformTex = glGetUniformLocation(m_BMPShader, "uTexSampler");
+	glUniform1i(uniformTex, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_Texgirl);
+
+	int uniformTex1 = glGetUniformLocation(m_BMPShader, "uTexSampler1");
+	glUniform1i(uniformTex1, 1);
+
+	GLuint uniformTime = glGetUniformLocation(m_BMPShader, "u_Time");
+	glUniform1f(uniformTime, time);
+	time += 0.05;
+	int attrribPosition = glGetAttribLocation(m_BMPShader, "Position");
+	int attrribTexPos = glGetAttribLocation(m_BMPShader, "TexPos");
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTextureRect);
+	glVertexAttribPointer(attrribPosition, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+	glVertexAttribPointer(attrribTexPos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (GLvoid*)(sizeof(GL_FLOAT) * 4));
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glEnableVertexAttribArray(attrribPosition);
+	glEnableVertexAttribArray(attrribTexPos);
+}
+
 void Renderer::textureAnimation()
 {
 	glUseProgram(m_AnimationTextureShader);
@@ -979,4 +1109,28 @@ void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, floa
 	glVertexAttribPointer(positionAttribID, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_POINTS, 0, pointCount);
 	glDisableVertexAttribArray(positionAttribID);
+}
+
+void Renderer::drawBrick()
+{
+	glUseProgram(m_BrickPattonShader);
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_Texbrick);
+
+	int uniformTex = glGetUniformLocation(m_BrickPattonShader, "uTexSampler");
+	glUniform1i(uniformTex, 0);
+
+	int attrribPosition = glGetAttribLocation(m_BrickPattonShader, "Position");
+	int attrribTexPos = glGetAttribLocation(m_BrickPattonShader, "TexPos");
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTextureRect);
+	glVertexAttribPointer(attrribPosition, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+	glVertexAttribPointer(attrribTexPos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (GLvoid*)(sizeof(GL_FLOAT) * 4));
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glEnableVertexAttribArray(attrribPosition);
+	glEnableVertexAttribArray(attrribTexPos);
 }

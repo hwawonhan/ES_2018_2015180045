@@ -30,8 +30,10 @@ void RenderScene(void)
 	//g_Renderer->Rader(points, gTime);
 	//g_Renderer->drawSmile();
 	//g_Renderer->Lecture8(gTime);
-	g_Renderer->textureAnimation();
+	//g_Renderer->textureAnimation();
 	//g_Renderer->Prectice(gTime);
+	//g_Renderer->drawBMP();
+	g_Renderer->drawBrick();
 	gTime += 0.0005f;
 	glutSwapBuffers();
 }
