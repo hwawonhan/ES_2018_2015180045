@@ -4,7 +4,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
+#include "LoadPng.h"
 #include "Dependencies\glew.h"
 
 class Renderer
@@ -31,6 +33,9 @@ public:
 	void textureAnimation();
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 	void drawBrick();
+	
+
+
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -38,7 +43,7 @@ private:
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
 	void CreateVertexBufferObjects();
 	void GetGLPosition(float x, float y, float *newX, float *newY);
-
+	GLuint CreatePngTexture(char * filePath);
 
 	bool m_Initialized = false;
 	
@@ -79,6 +84,9 @@ private:
 	GLuint m_Texboy = 0;
 	GLuint m_Texgirl = 0;
 	GLuint m_Texbrick = 0;
+
+	//lecture 9
+	GLuint m_Texparticle = 0;
 
 
 	float time = 0;

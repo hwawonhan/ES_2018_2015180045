@@ -41,6 +41,7 @@ void main()
 	}
 	
 	gl_Position = vec4(PosX, PosY, a_Position.z, 1);
+	gl_PointSize = 20;
 	v_FragPos = a_Position.xy;
 	v_Color = vec4(PosX * 10, PosY * 10, a_Position.z * 10, 1);
 }

@@ -197,7 +197,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterPoint), CenterPoint, GL_STATIC_DRAW);
 
 	//Lecture5
-	pointCount = 20;
+	pointCount = 200;
 	float *Points = new float[(pointCount+1) * 4];
 	for (int i = 0; i <= pointCount; ++i)
 	{
@@ -520,6 +520,8 @@ void Renderer::CreateVertexBufferObjects()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	m_Texparticle = CreatePngTexture("./Textures/particle2.png");
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -1079,7 +1081,24 @@ void Renderer::textureAnimation()
 
 }
 
+GLuint Renderer::CreatePngTexture(char * filePath)
+{
+	GLuint temp;
+	glGenTextures(1, &temp);
 
+	//Load Pngs
+	// Load file and decode image.
+	std::vector<unsigned char> image;
+	unsigned width, height;
+	unsigned error = lodepng::decode(image, width, height, filePath);
+
+	glBindTexture(GL_TEXTURE_2D, temp);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
+
+	return temp;
+}
 
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
@@ -1091,6 +1110,8 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time)
 {
 	glUseProgram(m_STParticleShader);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	int positionAttribID = glGetAttribLocation(m_STParticleShader, "a_Position");
 	GLint TimeUniform = glGetUniformLocation(m_STParticleShader, "u_Time");
 	GLint RatioUniform = glGetUniformLocation(m_STParticleShader, "u_Ratio");
@@ -1102,7 +1123,16 @@ void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, floa
 	glUniform1f(WidthUniform, 0.2f);
 	glUniform2f(StartPointUniform, start_x, start_y);
 	glUniform2f(EndPointUniform, end_x, end_y);
-	glPointSize(2);
+
+	GLuint textureUniform = glGetUniformLocation(m_STParticleShader, "u_Texture");
+	glUniform1i(textureUniform, 0);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_Texparticle);
+
+	glEnable(GL_PROGRAM_POINT_SIZE);
+	glEnable(GL_POINT_SPRITE);
+
 	glEnableVertexAttribArray(positionAttribID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture5Points);
@@ -1114,7 +1144,8 @@ void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, floa
 void Renderer::drawBrick()
 {
 	glUseProgram(m_BrickPattonShader);
-
+	/*glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_Texbrick);
@@ -1133,4 +1164,5 @@ void Renderer::drawBrick()
 
 	glEnableVertexAttribArray(attrribPosition);
 	glEnableVertexAttribArray(attrribTexPos);
+	//glDisable(GL_BLEND);
 }
