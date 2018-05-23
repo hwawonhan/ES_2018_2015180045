@@ -179,6 +179,8 @@
     <None Include="Shaders\FillAll.vs" />
     <None Include="Shaders\Lecture7.fs" />
     <None Include="Shaders\Lecture7.vs" />
+    <None Include="Shaders\Lecture9.fs" />
+    <None Include="Shaders\Lecture9.vs" />
     <None Include="Shaders\Prectice.fs" />
     <None Include="Shaders\Prectice.vs" />
     <None Include="Shaders\Rader.fs" />

@@ -33,7 +33,7 @@ public:
 	void textureAnimation();
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 	void drawBrick();
-	
+	void Lecture9();
 
 
 private:
@@ -43,6 +43,7 @@ private:
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
 	void CreateVertexBufferObjects();
 	void GetGLPosition(float x, float y, float *newX, float *newY);
+	void FlagPointSetting();
 	GLuint CreatePngTexture(char * filePath);
 
 	bool m_Initialized = false;
@@ -87,7 +88,8 @@ private:
 
 	//lecture 9
 	GLuint m_Texparticle = 0;
-
+	GLuint m_VBO_DummyMesh = 0;
+	int    gDummyVertexCount = 0;
 
 	float time = 0;
 	float gTimeStamp = 0;
@@ -105,5 +107,6 @@ private:
 	GLuint m_AnimationTextureShader = 0;
 	GLuint m_BMPShader = 0;
 	GLuint m_BrickPattonShader = 0;
+	GLuint m_Lecture9Shader = 0;
 };
 
