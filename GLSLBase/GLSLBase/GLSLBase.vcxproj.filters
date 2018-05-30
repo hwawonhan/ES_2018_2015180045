@@ -119,6 +119,12 @@
     <None Include="Shaders\Lecture9.vs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\Lecture10Particle.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Lecture10Particle.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

@@ -177,6 +177,8 @@
     <None Include="Shaders\brickPatton.vs" />
     <None Include="Shaders\FillAll.fs" />
     <None Include="Shaders\FillAll.vs" />
+    <None Include="Shaders\Lecture10Particle.fs" />
+    <None Include="Shaders\Lecture10Particle.vs" />
     <None Include="Shaders\Lecture7.fs" />
     <None Include="Shaders\Lecture7.vs" />
     <None Include="Shaders\Lecture9.fs" />

@@ -34,7 +34,7 @@ public:
 	void drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time);
 	void drawBrick();
 	void Lecture9();
-
+	void Lecture10();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -44,6 +44,7 @@ private:
 	void CreateVertexBufferObjects();
 	void GetGLPosition(float x, float y, float *newX, float *newY);
 	void FlagPointSetting();
+	void ParticleSettring();
 	GLuint CreatePngTexture(char * filePath);
 
 	bool m_Initialized = false;
@@ -96,6 +97,13 @@ private:
 	int pointCount;
 	bool timeflag;
 
+	//lecture 10
+	int gParticleVertexCount = 0;
+	GLuint VBO_ParticleMesh = 0;
+	GLuint gParticleTextureID = 0;
+
+
+	//shader
 	GLuint m_STParticleShader = 0;
 	GLuint m_TestShader = 0;
 	GLuint m_WaveEffectShader = 0;
@@ -108,5 +116,6 @@ private:
 	GLuint m_BMPShader = 0;
 	GLuint m_BrickPattonShader = 0;
 	GLuint m_Lecture9Shader = 0;
+	GLuint m_Lecture10Shader = 0;
 };
 

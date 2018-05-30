@@ -1,1 +1,14 @@
-﻿  GLSLBase.vcxproj -> C:\Users\hwawo\Desktop\ES_2018\ES_2018_2015180045\GLSLBase\x64\Debug\GLSLBase.exe
+﻿  Renderer.cpp
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(544): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(644): warning C4101: 'newY' :참조되지 않은 지역 변수입니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(644): warning C4101: 'newX' :참조되지 않은 지역 변수입니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(821): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(839): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1042): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1219): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1220): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1223): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1224): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1416): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+c:\users\hwawo\desktop\es_2018\es_2018_2015180045\glslbase\glslbase\renderer.cpp(1440): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+  GLSLBase.vcxproj -> C:\Users\hwawo\Desktop\ES_2018\ES_2018_2015180045\GLSLBase\x64\Debug\GLSLBase.exe

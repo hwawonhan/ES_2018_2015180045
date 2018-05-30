@@ -99,6 +99,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_BMPShader = CompileShaders("./Shaders/Textures.vs", "./Shaders/Textures.fs");
 	m_BrickPattonShader = CompileShaders("./Shaders/brickPatton.vs", "./Shaders/brickPatton.fs");
 	m_Lecture9Shader = CompileShaders("./Shaders/Lecture9.vs", "./Shaders/Lecture9.fs");
+	m_Lecture10Shader = CompileShaders("./Shaders/Lecture10Particle.vs", "./Shaders/Lecture10Particle.fs");
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -525,7 +526,7 @@ void Renderer::CreateVertexBufferObjects()
 	m_Texparticle = CreatePngTexture("./Textures/particle2.png");
 
 	FlagPointSetting();
-
+	ParticleSettring();
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -1193,6 +1194,158 @@ void Renderer::FlagPointSetting()
 
 }
 
+void Renderer::ParticleSettring()
+{
+
+	int particleCount = 100000;
+	float particleSize = 0.05f;
+	float particleInitPosX = 0.0f;
+	float particleInitPosY = 0.25f;
+
+	float* particleVertices = new float[particleCount * 2 * 3 * (3 + 2 + 4)];
+	int particleFloatCount = particleCount * 2 * 3 * (3 + 2 + 4);
+	gParticleVertexCount = particleCount * 2 * 3;
+
+	int particleVertIndex = 0;
+
+	for (int i = 0; i < particleCount; i++)
+	{
+		float randomValueX = 0.f;
+		float randomValueY = 0.f;
+		float randomValueZ = 0.f;
+		float randomStartTime = 0.f;
+		float velocityScale = 0.0f;
+
+		randomValueX = (rand() / (float)RAND_MAX - 0.5)*velocityScale;
+		randomValueY = (rand() / (float)RAND_MAX - 0.5)*velocityScale;
+		randomValueZ = 0.f;
+		randomStartTime = (rand() / (float)RAND_MAX)*20.f;
+		particleInitPosX = (rand() / (float)RAND_MAX - 0.5) * 2.f;
+		particleInitPosY = (rand() / (float)RAND_MAX - 0.5) * 2.f;
+
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+
+		particleVertices[particleVertIndex] = -particleSize / 2.f + particleInitPosX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = particleSize / 2.f + particleInitPosY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 0.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = 1.f;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueX;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueY;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomValueZ;
+		particleVertIndex++;
+		particleVertices[particleVertIndex] = randomStartTime;
+		particleVertIndex++;
+	}
+
+	glGenBuffers(1, &VBO_ParticleMesh);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_ParticleMesh);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*particleFloatCount, particleVertices, GL_STATIC_DRAW);
+
+	gParticleTextureID = CreatePngTexture("./Textures/particle.png");
+
+}
+
 void Renderer::drawParticleTrail(float start_x, float start_y, float end_x, float end_y, float time)
 {
 	glUseProgram(m_STParticleShader);
@@ -1272,5 +1425,39 @@ void Renderer::Lecture9()
 	glDrawArrays(GL_TRIANGLES, 0, gDummyVertexCount);
 
 	glDisableVertexAttribArray(attribPosition);
+
+}
+
+void Renderer::Lecture10()
+{
+	GLuint shader = m_Lecture10Shader;
+	glUseProgram(shader);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	int uniformTime = glGetUniformLocation(shader, "uTime");
+	glUniform1f(uniformTime, gTimeStamp);
+	gTimeStamp += 0.001;
+
+	int uniformTexture = glGetUniformLocation(shader, "uTexture");
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, gParticleTextureID);
+	glUniform1i(uniformTexture, 0);
+
+	int attrribPosition = glGetAttribLocation(shader, "Position");
+	int attrribTexPos = glGetAttribLocation(shader, "TexPos");
+	int attrribVelocity = glGetAttribLocation(shader, "Velocity");
+
+	glEnableVertexAttribArray(attrribPosition);
+	glEnableVertexAttribArray(attrribTexPos);
+	glEnableVertexAttribArray(attrribVelocity);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_ParticleMesh);
+	glVertexAttribPointer(attrribPosition, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), 0);
+	glVertexAttribPointer(attrribTexPos, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (GLvoid*)(3 * sizeof(float)));
+	glVertexAttribPointer(attrribVelocity, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (GLvoid*)(5 * sizeof(float)));
+
+	int count = 100;
+	glDrawArrays(GL_TRIANGLES, 0, 6*count);
 
 }

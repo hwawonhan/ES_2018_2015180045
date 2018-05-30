@@ -20,9 +20,9 @@ float ex, ey;
 float gTime = 0.0f;
 void RenderScene(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-	//g_Renderer->filAll(1, 1, 1, 0.01);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	g_Renderer->filAll(1, 1, 1, 0.01);
 
 	float points[] = { 0.5, 0.5, 6, -0.5, 0.5, 8, 0.5, -0.5, 5, -0.5, -0.5, 7 };
 	//g_Renderer->WaveEffect(points, gTime);
@@ -34,7 +34,8 @@ void RenderScene(void)
 	//g_Renderer->Prectice(gTime);
 	//g_Renderer->drawBMP();
 	//g_Renderer->drawBrick();
-	g_Renderer->Lecture9();
+	//g_Renderer->Lecture9();
+	g_Renderer->Lecture10();
 	gTime += 0.0005f;
 	glutSwapBuffers();
 }
